@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IslamQuiZz - Interactive Islamic Quiz & Live Multiplayer | SahihFinder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23093621'/><text x='50' y='72' font-size='65' text-anchor='middle' fill='%23d4af37'>☪</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <script src="peerjs.min.js"></script>
+</head>
+<body>
+    <header class="sf-navbar">
+        <div class="sf-brand">
+            <span class="sf-logo">☪ IslamQuiZz</span>
+            <span class="sf-tagline">by SahihFinder</span>
+        </div>
+        <nav class="sf-links">
+            <button id="nav-lobby-btn" class="nav-btn">🎮 Play Decks</button>
+            <button id="nav-join-btn" class="nav-btn live">🔢 Join Live PIN</button>
+            <button id="nav-create-btn" class="nav-btn gold">✨ Create Quiz</button>
+            <a href="https://sahihfinder.com" target="_blank">SahihFinder</a>
+        </nav>
+    </header>
+
+    <main id="lobby-view" class="view container">
+        <div class="hero-banner">
+            <h1>Test Your Islamic Knowledge & Hadith Verification</h1>
+            <p>Play solo, host a live 6-digit PIN room for friends or classes, or create and share your own quiz!</p>
+        </div>
+        <div id="deck-grid" class="deck-grid"></div>
+    </main>
+
+    <section id="host-view" class="view container hidden">
+        <div class="host-card">
+            <span id="host-status-badge" class="status-pill">🟡 Waiting for Players</span>
+            <h2 id="host-deck-name">Quiz Deck</h2>
+            <p class="pin-label">Join at <strong>islamquizz.sahihfinder.com</strong> with Room PIN:</p>
+            <div id="host-pin-display" class="pin-box">------</div>
+
+            <div class="leaderboard-box">
+                <h3>🏆 Live Players & Standings</h3>
+                <div id="host-players-list" class="players-list"></div>
+            </div>
+
+            <div class="results-actions">
+                <button id="host-start-btn" class="btn-play">🚀 Start Live Match</button>
+                <button id="host-close-btn" class="btn-share">Close Room</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="join-view" class="view container hidden">
+        <div class="results-card">
+            <h2>🔢 Join a Live Quiz Room</h2>
+            <p class="builder-sub">Enter the 6-digit PIN shown on the host's screen.</p>
+            <input type="text" id="join-pin-input" class="pin-input" maxlength="6" placeholder="000000">
+            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Bilal)">
+            <button id="join-submit-btn" class="btn-play full-btn">Join Room</button>
+            <p id="join-status" class="join-status"></p>
+        </div>
+    </section>
+
+    <section id="game-view" class="view game-arena hidden">
+        <div class="hud-bar">
+            <span id="game-progress" class="hud-pill">Question 1 / 4</span>
+            <span id="game-streak" class="hud-pill streak">🔥 0x</span>
+            <span id="game-score" class="hud-pill score">🪙 0</span>
+        </div>
+        <div class="timer-track"><div id="timer-bar" class="timer-fill"></div></div>
+
+        <div class="question-stage">
+            <h2 id="question-prompt">Loading question...</h2>
+        </div>
+
+        <div id="answers-grid" class="answers-grid"></div>
+
+        <div id="feedback-overlay" class="feedback-overlay hidden">
+            <div class="feedback-card">
+                <h2 id="feedback-title">✅ CORRECT!</h2>
+                <p id="feedback-points" class="pts">+150 Points</p>
+                <p id="feedback-explanation" class="exp"></p>
+                <button id="next-q-btn" class="btn-next">Next Question ➔</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="results-view" class="view container hidden">
+        <div class="results-card">
+            <div class="trophy">🏆</div>
+            <h2 id="final-deck-title">Quiz Complete!</h2>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span>Total Score</span>
+                    <strong id="final-score">0</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Best Streak</span>
+                    <strong id="final-streak">0x</strong>
+                </div>
+            </div>
+
+            <div id="live-board-box" class="leaderboard-box hidden">
+                <h3>📡 Live Room Standings</h3>
+                <div id="live-results-board" class="players-list"></div>
+            </div>
+
+            <div class="results-actions">
+                <button id="play-again-btn" class="btn-play">↻ Play Again</button>
+                <button id="back-home-btn" class="btn-share">Back to Lobby</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="builder-view" class="view container hidden">
+        <div class="builder-card">
+            <h2>✨ Create & Share Your Own Islamic Quiz</h2>
+            <p class="builder-sub">Your quiz is encoded directly into a shareable URL—no account or database needed!</p>
+
+            <div class="row-2">
+                <input type="text" id="b-title" placeholder="Quiz Title (e.g., Prophets in the Quran)">
+                <input type="text" id="b-author" placeholder="Your Name / Studio">
+            </div>
+
+            <div class="q-editor">
+                <h3>Add a Question</h3>
+                <input type="text" id="b-prompt" placeholder="Enter your question...">
+                <div class="row-2">
+                    <input type="text" id="b-c0" placeholder="▲ Choice 1">
+                    <input type="text" id="b-c1" placeholder="◆ Choice 2">
+                    <input type="text" id="b-c2" placeholder="● Choice 3">
+                    <input type="text" id="b-c3" placeholder="■ Choice 4">
+                </div>
+                <div class="row-2">
+                    <select id="b-correct">
+                        <option value="0">Correct Answer: ▲ Choice 1</option>
+                        <option value="1">Correct Answer: ◆ Choice 2</option>
+                        <option value="2">Correct Answer: ● Choice 3</option>
+                        <option value="3">Correct Answer: ■ Choice 4</option>
+                    </select>
+                    <input type="text" id="b-exp" placeholder="Source / Explanation shown after answering">
+                </div>
+                <button id="add-q-btn" type="button" class="btn-share">+ Add Question to Deck</button>
+            </div>
+
+            <div id="builder-list" class="builder-list"></div>
+
+            <button id="publish-quiz-btn" type="button" class="btn-play full-btn">🔗 Publish & Copy Shareable Link</button>
+        </div>
+    </section>
+
+    <footer class="sf-footer">© 2026 IslamQuiZz • SahihFinder - Shahadah Studios Elite</footer>
+
+    <script type="module" src="dist/main.js"></script>
+</body>
+</html>
