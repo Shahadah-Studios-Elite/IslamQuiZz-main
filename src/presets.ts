@@ -56,6 +56,12 @@ export const PREMADE_DECKS: QuizDeck[] = [
                 choices: ["Surah Al-Fatihah", "Surah Al-Mulk", "Surah Ya-Sin", "Surah Al-Ikhlas"],
                 correctIndex: 2,
                 explanation: "Surah Ya-Sin is widely referred to by scholars as Qalb al-Quran (the Heart of the Quran)."
+            },
+             {
+                prompt: "Where did the Muslims first migrate to?",
+                choices: ["Madinah", "Oman", "Abbisinya", "Ta-if"],
+                correctIndex: 2,
+                explanation: "Muslims first migrated to Abbisinya because they knew there was a just king for the land."
             }
         ]
     }
