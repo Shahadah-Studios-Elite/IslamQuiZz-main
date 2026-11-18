@@ -1,7 +1,7 @@
 import { QuizDeck, QuizQuestion } from "./types.js";
 import { PREMADE_DECKS } from "./presets.js";
 import { QuizGameEngine } from "./game.js";
-import { PeerMultiplayerManager } from "./multiplayer.js";
+import { PeerMultiplayerManager } from "./multi.js";
 
 let builderQuestions: QuizQuestion[] = [];
 
