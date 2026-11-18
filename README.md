@@ -231,6 +231,8 @@ Before changing quiz content, please verify the accuracy and scholarly grading o
 ## Content and accuracy
 
 IslamQuiZz is an educational trivia application. Deck explanations are intended for general learning and should not replace study with qualified scholars or consultation of primary sources.
+> [!IMPORTANT]
+> THE SITE CANNOT HOLD INTERNATIONAL LIVE GAMES; Only In the region you live in!
 
 ## License
 
