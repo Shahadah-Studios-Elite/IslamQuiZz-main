@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IslamQuiZz - Interactive Islamic Quiz & Live Multiplayer | SahihFinder</title>
-    
+   
     <link rel="stylesheet" href="style.css">
     <script src="peerjs.min.js"></script>
 </head>
@@ -15,9 +15,9 @@
             <span class="sf-tagline">by SahihFinder</span>
         </div>
         <nav class="sf-links">
-            <button id="nav-lobby-btn" class="nav-btn">Play</button>
-            <button id="nav-join-btn" class="nav-btn live">Join live game</button>
-            <button id="nav-create-btn" class="nav-btn gold">Create Quiz!</button>
+            <button id="nav-lobby-btn" class="nav-btn">Play Decks</button>
+            <button id="nav-join-btn" class="nav-btn live">Join Live PIN</button>
+            <button id="nav-create-btn" class="nav-btn gold">✨ Create Quiz</button>
             <a href="https://sahihfinder.com" target="_blank">SahihFinder</a>
         </nav>
     </header>
@@ -25,7 +25,7 @@
     <main id="lobby-view" class="view container">
         <div class="hero-banner">
             <h1>Test Your Islamic Knowledge & Hadith Verification</h1>
-            <p>Play solo, host a live 6-digit PIN room for friends or classes, or create and share your own quiz!</p>
+            <p>Play solo, host a live 6-digit PIN room with podium rankings, or create and share your own quiz!</p>
         </div>
         <div id="deck-grid" class="deck-grid"></div>
     </main>
@@ -37,6 +37,8 @@
             <p class="pin-label">Join at <strong>islamquizz.sahihfinder.com</strong> with Room PIN:</p>
             <div id="host-pin-display" class="pin-box">------</div>
 
+            <div id="host-podium" class="hidden"></div>
+
             <div class="leaderboard-box">
                 <h3>🏆 Live Players & Standings</h3>
                 <div id="host-players-list" class="players-list"></div>
@@ -44,6 +46,7 @@
 
             <div class="results-actions">
                 <button id="host-start-btn" class="btn-play">🚀 Start Live Match</button>
+                <button id="host-export-btn" class="btn-export hidden">Export CSV</button>
                 <button id="host-close-btn" class="btn-share">Close Room</button>
             </div>
         </div>
@@ -52,10 +55,22 @@
     <section id="join-view" class="view container hidden">
         <div class="results-card">
             <h2>Join a Live Quiz Room</h2>
-            <p class="builder-sub">Enter the 6-digit PIN shown on the host's screen.</p>
+            <p class="builder-sub">Choose your avatar and enter the 6-digit Room PIN.</p>
+
+            <div class="avatar-picker">
+                <button type="button" class="avatar-btn selected" data-avatar="🕌" title="Mosque">🕌</button>
+                <button type="button" class="avatar-btn" data-avatar="☪️" title="Crescent">☪️</button>
+                <button type="button" class="avatar-btn" data-avatar="📜" title="Scroll">📜</button>
+                <button type="button" class="avatar-btn" data-avatar="🏮" title="Lantern">🏮</button>
+                <button type="button" class="avatar-btn" data-avatar="🧭" title="Compass">🧭</button>
+                <button type="button" class="avatar-btn" data-avatar="🌴" title="Palm">🌴</button>
+                <button type="button" class="avatar-btn" data-avatar="🛡️" title="Shield">🛡️</button>
+                <button type="button" class="avatar-btn" data-avatar="📖" title="Quran & Knowledge">📖</button>
+            </div>
+
             <input type="text" id="join-pin-input" class="pin-input" maxlength="6" placeholder="000000">
-            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Ahmad)">
-            <button id="join-submit-btn" class="btn-play full-btn">Join game</button>
+            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Bilal)">
+            <button id="join-submit-btn" class="btn-play full-btn">Join Room</button>
             <p id="join-status" class="join-status"></p>
         </div>
     </section>
@@ -100,12 +115,14 @@
             </div>
 
             <div id="live-board-box" class="leaderboard-box hidden">
-                <h3>Live Room Standings</h3>
+                <h3>📡 Live Podium & Standings</h3>
+                <div id="client-podium"></div>
                 <div id="live-results-board" class="players-list"></div>
             </div>
 
             <div class="results-actions">
                 <button id="play-again-btn" class="btn-play">↻ Play Again</button>
+                <button id="solo-export-btn" class="btn-export">Export CSV</button>
                 <button id="back-home-btn" class="btn-share">Back to Lobby</button>
             </div>
         </div>
