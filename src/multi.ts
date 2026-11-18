@@ -9,6 +9,19 @@ import {
 
 declare const Peer: any;
 
+const PEER_CONFIG = {
+    debug: 1,
+    config: {
+        iceServers: [
+            { urls: "stun:://google.com" },
+            { urls: "stun:://google.com" },
+            { urls: "stun:://google.com" },
+            { urls: "stun:://twilio.com" }
+        ],
+        iceCandidatePoolSize: 10
+    }
+};
+
 export class PeerMultiplayerManager {
     private peer: any = null;
     private hostConn: any = null;
@@ -70,7 +83,7 @@ export class PeerMultiplayerManager {
         document.getElementById("host-export-btn")?.classList.add("hidden");
         renderRemoteLeaderboard("host-players-list", []);
 
-        this.peer = new Peer(peerId);
+        this.peer = new Peer(peerId, PEER_CONFIG);
 
         this.peer.on("open", () => {
             document.getElementById("host-pin-display")!.textContent = this.roomPin;
@@ -115,7 +128,7 @@ export class PeerMultiplayerManager {
         });
 
         this.peer.on("error", (err: any) => {
-            alert(`Room error: ${err?.message || err}`);
+            alert(`Room error: ${err?.type || err?.message || err}`);
         });
     }
 
@@ -151,15 +164,26 @@ export class PeerMultiplayerManager {
         this.myName = playerName.trim() || "Seeker";
         this.myAvatar = avatar || "🕌";
         const statusEl = document.getElementById("join-status")!;
-        statusEl.textContent = "Connecting to room...";
+        statusEl.textContent = "Step 1/2: Registering on PeerJS network...";
 
-        this.peer = new Peer();
+        this.peer = new Peer(PEER_CONFIG);
+
+        const timeout = window.setTimeout(() => {
+            if (!this.hostConn || !this.hostConn.open) {
+                statusEl.textContent = "⚠️ Connection timed out. One of your networks may be blocking peer-to-peer WebRTC (try switching off VPN/school Wi-Fi).";
+            }
+        }, 12000);
 
         this.peer.on("open", () => {
-            const conn = this.peer.connect(`sahih-quizz-${cleanPin}`, { reliable: true });
+            statusEl.textContent = `Step 2/2: Handshaking with Room ${cleanPin}...`;
+            const conn = this.peer.connect(`sahih-quizz-${cleanPin}`, {
+                reliable: true,
+                serialization: "json"
+            });
             this.hostConn = conn;
 
             conn.on("open", () => {
+                clearTimeout(timeout);
                 statusEl.textContent = `✅ Connected as ${this.myAvatar} ${this.myName}! Waiting for host to start...`;
                 conn.send({ type: "JOIN", name: this.myName, avatar: this.myAvatar });
             });
@@ -174,12 +198,23 @@ export class PeerMultiplayerManager {
             });
 
             conn.on("close", () => {
+                clearTimeout(timeout);
                 statusEl.textContent = "❌ Disconnected from host.";
+            });
+
+            conn.on("error", (err: any) => {
+                clearTimeout(timeout);
+                statusEl.textContent = `❌ Data channel error: ${err?.message || err}`;
             });
         });
 
-        this.peer.on("error", () => {
-            statusEl.textContent = "❌ Could not find room. Check the 6-digit PIN and try again.";
+        this.peer.on("error", (err: any) => {
+            clearTimeout(timeout);
+            if (err?.type === "peer-unavailable") {
+                statusEl.textContent = `❌ Room ${cleanPin} not found. Make sure the host still has the PIN screen open.`;
+            } else {
+                statusEl.textContent = `❌ Network error (${err?.type || "unknown"}).`;
+            }
         });
     }
 
