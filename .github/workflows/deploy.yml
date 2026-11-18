@@ -1,0 +1,51 @@
+name: Build TypeScript & Deploy IslamQuiZz
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Bundle PeerJS & Compile TypeScript
+        run: |
+          if [ -f "src/type.ts" ]; then mv src/type.ts src/types.ts; fi
+          npm install --no-save typescript peerjs
+          cp node_modules/peerjs/dist/peerjs.min.js ./peerjs.min.js
+          npx tsc src/*.ts --outDir dist --target ES2022 --module ES2022 --noImplicitAny false --skipLibCheck --ignoreConfig
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
