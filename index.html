@@ -11,13 +11,13 @@
 <body>
     <header class="sf-navbar">
         <div class="sf-brand">
-            <span class="sf-logo">☪ IslamQuiZz</span>
+            <span class="sf-logo">IslamQuiZz</span>
             <span class="sf-tagline">by SahihFinder</span>
         </div>
         <nav class="sf-links">
-            <button id="nav-lobby-btn" class="nav-btn">🎮 Play Decks</button>
-            <button id="nav-join-btn" class="nav-btn live">🔢 Join Live PIN</button>
-            <button id="nav-create-btn" class="nav-btn gold">✨ Create Quiz</button>
+            <button id="nav-lobby-btn" class="nav-btn">Play</button>
+            <button id="nav-join-btn" class="nav-btn live">Join Live PIN</button>
+            <button id="nav-create-btn" class="nav-btn gold">Create Quiz!</button>
             <a href="https://sahihfinder.com" target="_blank">SahihFinder</a>
         </nav>
     </header>
@@ -32,7 +32,7 @@
 
     <section id="host-view" class="view container hidden">
         <div class="host-card">
-            <span id="host-status-badge" class="status-pill">🟡 Waiting for Players</span>
+            <span id="host-status-badge" class="status-pill">Waiting for Players...</span>
             <h2 id="host-deck-name">Quiz Deck</h2>
             <p class="pin-label">Join at <strong>islamquizz.sahihfinder.com</strong> with Room PIN:</p>
             <div id="host-pin-display" class="pin-box">------</div>
@@ -51,11 +51,11 @@
 
     <section id="join-view" class="view container hidden">
         <div class="results-card">
-            <h2>🔢 Join a Live Quiz Room</h2>
+            <h2>Join a Live Quiz Room</h2>
             <p class="builder-sub">Enter the 6-digit PIN shown on the host's screen.</p>
             <input type="text" id="join-pin-input" class="pin-input" maxlength="6" placeholder="000000">
-            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Bilal)">
-            <button id="join-submit-btn" class="btn-play full-btn">Join Room</button>
+            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Ahmad)">
+            <button id="join-submit-btn" class="btn-play full-btn">Join game</button>
             <p id="join-status" class="join-status"></p>
         </div>
     </section>
