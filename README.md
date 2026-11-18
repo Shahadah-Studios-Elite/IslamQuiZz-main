@@ -239,5 +239,5 @@ No license has currently been specified for this repository. Add a `LICENSE` fil
 ## Credits
 
 - **Shahadah Studios Elite** — development and publishing
-- **SahihFinder** — project integration and educational resources
+- **[SahihFinder](https://www.sahihfinder.com)** — project integration and educational resources
 - [PeerJS](https://peerjs.com/) — peer-to-peer networking
