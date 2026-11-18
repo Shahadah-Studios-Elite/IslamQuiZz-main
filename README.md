@@ -1,7 +1,7 @@
 # IslamQuiZz
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-islamquizz.sahihfinder.com-0f5132?style=for-the-badge)](http://islamquizz.sahihfinder.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-63.5%25-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-67.9%25-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![PeerJS](https://img.shields.io/badge/Networking-PeerJS-0284c7)](https://peerjs.com/)
 
 **IslamQuiZz** is a browser-based Islamic trivia experience for solo play and live multiplayer rooms. It includes Hadith verification, Seerah, and Islamic history decks, plus a quiz builder that turns custom decks into shareable links.
