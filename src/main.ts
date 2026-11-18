@@ -4,6 +4,7 @@ import { QuizGameEngine } from "./game.js";
 import { PeerMultiplayerManager } from "./multi.js";
 
 let builderQuestions: QuizQuestion[] = [];
+let selectedAvatar = "🕌";
 
 function showView(viewId: string): void {
     document.querySelectorAll(".view").forEach(el => el.classList.add("hidden"));
@@ -68,7 +69,7 @@ function renderLobby(): void {
             <p class="deck-author">By ${deck.author}</p>
             <div class="deck-actions">
                 <button class="btn-play" data-idx="${index}">▶ Solo</button>
-                <button class="btn-host" data-idx="${index}">📡 Host Live</button>
+                <button class="btn-host" data-idx="${index}">Host Live</button>
                 <button class="btn-share" data-idx="${index}">🔗</button>
             </div>
         `;
@@ -86,7 +87,7 @@ function renderLobby(): void {
         btn.addEventListener("click", (e) => {
             const idx = parseInt((e.currentTarget as HTMLElement).dataset.idx || "0", 10);
             document.getElementById("host-start-btn")!.classList.remove("hidden");
-            document.getElementById("host-status-badge")!.textContent = "🟡 Waiting for Players";
+            document.getElementById("host-status-badge")!.textContent = "Waiting for Players...";
             multiplayer.hostRoom(allDecks.at(idx)!);
         });
     });
@@ -127,6 +128,15 @@ function renderBuilderList(): void {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".avatar-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            document.querySelectorAll(".avatar-btn").forEach(b => b.classList.remove("selected"));
+            const target = e.currentTarget as HTMLElement;
+            target.classList.add("selected");
+            selectedAvatar = target.dataset.avatar || "🕌";
+        });
+    });
+
     document.getElementById("nav-lobby-btn")?.addEventListener("click", () => {
         game.stopTimer();
         renderLobby();
@@ -148,12 +158,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("host-start-btn")?.addEventListener("click", () => multiplayer.startHostedMatch());
+    document.getElementById("host-export-btn")?.addEventListener("click", () => multiplayer.exportCSV());
     document.getElementById("host-close-btn")?.addEventListener("click", () => renderLobby());
+
+    document.getElementById("solo-export-btn")?.addEventListener("click", () => {
+        const scoreVal = parseInt(document.getElementById("final-score")?.textContent || "0", 10);
+        const streakVal = document.getElementById("final-streak")?.textContent || "0x";
+        const titleVal = document.getElementById("final-deck-title")?.textContent || "quiz";
+        multiplayer.exportCSV(scoreVal, parseInt(streakVal, 10), titleVal);
+    });
 
     document.getElementById("join-submit-btn")?.addEventListener("click", () => {
         const pin = (document.getElementById("join-pin-input") as HTMLInputElement).value;
         const name = (document.getElementById("join-name-input") as HTMLInputElement).value;
-        multiplayer.joinRoom(pin, name);
+        multiplayer.joinRoom(pin, name, selectedAvatar);
     });
 
     document.getElementById("next-q-btn")?.addEventListener("click", () => game.nextQuestion());
