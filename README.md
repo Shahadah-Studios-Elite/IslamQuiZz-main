@@ -234,7 +234,7 @@ IslamQuiZz is an educational trivia application. Deck explanations are intended 
 
 ## License
 
-No license has currently been specified for this repository. Add a `LICENSE` file if you intend to grant reuse, modification, or redistribution permissions.
+This repository is licensed under the **MIT license**. 
 
 ## Credits
 
