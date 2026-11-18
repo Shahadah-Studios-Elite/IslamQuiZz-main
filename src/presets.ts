@@ -3,7 +3,7 @@ import { QuizDeck } from "./types.js";
 export const PREMADE_DECKS: QuizDeck[] = [
     {
         id: "hadith-truth",
-        title: "Sahih vs. Fabricated: Viral Quotes",
+        title: "Sahih vs. Fabricated: Popular Quotes",
         author: "SahihFinder Team",
         category: "Hadith Verification",
         questions: [
