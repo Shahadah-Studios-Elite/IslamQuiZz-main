@@ -234,6 +234,9 @@ IslamQuiZz is an educational trivia application. Deck explanations are intended 
 > [!IMPORTANT]
 > THE SITE CANNOT HOLD INTERNATIONAL LIVE GAMES; Only In the region you live in!
 
+> [!WARNING]
+> The WebRTC jumbles up on cecullar data (a phone) to Wi-Fi (a computer). So if you play try to be on the same<br>device
+
 ## License
 
 This repository is licensed under the **MIT license**. 
