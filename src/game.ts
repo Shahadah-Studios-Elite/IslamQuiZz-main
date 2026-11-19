@@ -51,6 +51,69 @@ export class QuizGameEngine {
         }
     }
 
+    private launchConfetti(): void {
+        const canvas = document.createElement("canvas");
+        canvas.style.position = "fixed";
+        canvas.style.inset = "0";
+        canvas.style.width = "100vw";
+        canvas.style.height = "100vh";
+        canvas.style.pointerEvents = "none";
+        canvas.style.zIndex = "9999";
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            canvas.remove();
+            return;
+        }
+
+        const colors = ["#d4af37", "#16a34a", "#34d399", "#facc15", "#ffffff", "#0f5132"];
+        const pieces = Array.from({ length: 85 }, () => ({
+            x: Math.random() * canvas.width,
+            y: -20 - Math.random() * 140,
+            w: 7 + Math.random() * 7,
+            h: 5 + Math.random() * 6,
+            vx: (Math.random() - 0.5) * 4,
+            vy: 3.5 + Math.random() * 4.5,
+            rot: Math.random() * Math.PI * 2,
+            vRot: (Math.random() - 0.5) * 0.2,
+            color: colors[Math.floor(Math.random() * colors.length)]
+        }));
+
+        let frame = 0;
+        const maxFrames = 110;
+
+        const animate = () => {
+            frame += 1;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            pieces.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.08;
+                p.rot += p.vRot;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(0, 1 - frame / maxFrames);
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+            });
+
+            if (frame < maxFrames) {
+                requestAnimationFrame(animate);
+            } else {
+                canvas.remove();
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }
+
     private shuffleDeck(source: QuizQuestion[]): QuizQuestion[] {
         const shuffledQuestions = source.map(q => {
             const items = q.choices.map((text, idx) => ({
@@ -147,6 +210,7 @@ export class QuizGameEngine {
             const earned = Math.round((100 + this.timeLeft * 10) * multiplier);
             this.score += earned;
 
+            this.launchConfetti();
             this.playTone(587.33, "triangle", 0.15);
             setTimeout(() => this.playTone(880, "triangle", 0.25), 100);
 
@@ -174,6 +238,7 @@ export class QuizGameEngine {
 
     private endGame(): void {
         this.onShowView("results-view");
+        this.launchConfetti();
         this.playTone(523.25, "triangle", 0.15);
         setTimeout(() => this.playTone(659.25, "triangle", 0.15), 120);
         setTimeout(() => this.playTone(783.99, "triangle", 0.3), 240);
