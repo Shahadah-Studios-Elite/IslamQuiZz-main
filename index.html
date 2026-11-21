@@ -18,7 +18,7 @@
         <nav class="sf-links">
             <button id="nav-lobby-btn" class="nav-btn">Play</button>
             <button id="nav-join-btn" class="nav-btn live">Join Live PIN</button>
-            <button id="nav-create-btn" class="nav-btn gold">✨ Create Quiz</button>
+            <button id="nav-create-btn" class="nav-btn gold"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-astroid preview-icon"><path d="M12.983 21.186a1 1 0 0 1-1.966 0 10 10 0 0 0-8.203-8.203 1 1 0 0 1 0-1.966 10 10 0 0 0 8.203-8.203 1 1 0 0 1 1.966 0 10 10 0 0 0 8.203 8.203 1 1 0 0 1 0 1.966 10 10 0 0 0-8.203 8.203"/></svg> Create Quiz</button>
             <a href="https://sahihfinder.com" target="_blank">SahihFinder</a>
         </nav>
     </header>
@@ -41,12 +41,12 @@
             <div id="host-podium" class="hidden"></div>
 
             <div class="leaderboard-box">
-                <h3>🏆 Live Players & Standings</h3>
+                <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy preview-icon"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></svg> Live Players & Standings</h3>
                 <div id="host-players-list" class="players-list"></div>
             </div>
 
             <div class="results-actions">
-                <button id="host-start-btn" class="btn-play">🚀 Start Live Match</button>
+                <button id="host-start-btn" class="btn-play"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket preview-icon"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg> Start Live Match</button>
                 <button id="host-export-btn" class="btn-export hidden">Export CSV</button>
                 <button id="host-close-btn" class="btn-share">Close game</button>
             </div>
@@ -70,7 +70,7 @@
             </div>
 
             <input type="text" id="join-pin-input" class="pin-input" maxlength="6" placeholder="000000">
-            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Bilal)">
+            <input type="text" id="join-name-input" maxlength="18" placeholder="Your Nickname (e.g., Ahmad)">
             <button id="join-submit-btn" class="btn-play full-btn">Join Room</button>
             <p id="join-status" class="join-status"></p>
         </div>
@@ -92,7 +92,7 @@
 
         <div id="feedback-overlay" class="feedback-overlay hidden">
             <div class="feedback-card">
-                <h2 id="feedback-title">✅ CORRECT!</h2>
+                <h2 id="feedback-title">CORRECT! <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-check-big preview-icon"><path d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"/><path d="m9 11 3 3L22 4"/></svg></h2>
                 <p id="feedback-points" class="pts">+150 Points</p>
                 <p id="feedback-explanation" class="exp"></p>
                 <button id="next-q-btn" class="btn-next">Next Question ➔</button>
@@ -102,7 +102,7 @@
 
     <section id="results-view" class="view container hidden">
         <div class="results-card">
-            <div class="trophy">🏆</div>
+            <div class="trophy"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal preview-icon"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg></div>
             <h2 id="final-deck-title">Quiz Complete!</h2>
             <div class="stats-row">
                 <div class="stat-box">
@@ -116,7 +116,7 @@
             </div>
 
             <div id="live-board-box" class="leaderboard-box hidden">
-                <h3>📡 Live Podium & Standings</h3>
+                <h3>Live Podium & Standings</h3>
                 <div id="client-podium"></div>
                 <div id="live-results-board" class="players-list"></div>
             </div>
@@ -131,7 +131,7 @@
 
     <section id="builder-view" class="view container hidden">
         <div class="builder-card">
-            <h2>✨ Create & Share Your Own Islamic Quiz</h2>
+            <h2><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles preview-icon"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg> Create & Share Your Own Islamic Quiz</h2>
             <p class="builder-sub">Your quiz is encoded directly into a shareable URL!</p>
 
             <div class="row-2">
